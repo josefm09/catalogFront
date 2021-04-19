@@ -6,6 +6,7 @@ const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
+  const [cartProducts, setCartProducts] = useState([]);
 
   useEffect(() => {
     retrieveProducts();
@@ -30,28 +31,41 @@ const ProductsList = () => {
   const setActiveProduct = (product, index) => {
     setCurrentProduct(product);
     setCurrentIndex(index);
+    if(document.getElementById("quantity") != null){
+      document.getElementById("quantity").value = "";
+    }
   };
 
   const addCart = () => {
-    let activo = document.getElementsByClassName("active");
+    let activo = document.querySelector(".active span")
     let quantity = document.getElementById("quantity");
-    var first = document.createElement("span");
-    var text = document.createTextNode("Carrito: "+quantity.value);
-    first.appendChild(text);
-    activo[0].appendChild(first);
+    activo.innerHTML = 'En el carrito: '+quantity.value+'';
+
+    if(!(currentProduct.product_id in cartProducts)){
+      currentProduct.quantity = quantity.value;
+      setCartProducts([...cartProducts, currentProduct]);
+    }else {
+      cartProducts[currentProduct.product_id].quantity = quantity.value;
+    }
+
+    //codigo que se va a pasar al checkout
+    let unique = cartProducts.filter(onlyUnique);
+  };
+
+  const onlyUnique = (value, index, self) => {
+    return self.indexOf(value) === index;
   };
 
   return (
     <div className="list row">
       <div className="col-md-8">
         <div className="input-group mb-3">
-          <button
-            className="btn btn-success"
-            type="button"
-            onClick={addCart}
-          >
+            <Link
+              to={{ pathname: "/checkout", state: { cart: cartProducts }}}
+              className="btn btn-success"
+            >
             Pagar articulos en carrito
-          </button>
+          </Link>
         </div>
       </div>
       <div className="col-md-6">
@@ -68,7 +82,9 @@ const ProductsList = () => {
                 key={index}
               >
                 {product.name.substring(0,40)}
-
+                <div>
+                  <span></span>
+                </div>
               </li>
             ))}
         </ul>
@@ -123,9 +139,11 @@ const ProductsList = () => {
                 id="quantity"
                 min="1"
                 max={currentProduct.stock}
-                onChange={addCart}
                 name="quantity"
               />
+              <button className="btn btn-info" onClick={addCart}>
+                Agregar
+              </button>
             </div>
 
 
