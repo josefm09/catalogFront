@@ -117,7 +117,7 @@ const AddProduct = props => {
               min="1"
               max="9999999"
               required
-              value={product.srock}
+              value={product.stock}
               onChange={handleInputChange}
               name="stock"
             />

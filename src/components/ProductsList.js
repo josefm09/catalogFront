@@ -37,23 +37,27 @@ const ProductsList = () => {
   };
 
   const addCart = () => {
-    let activo = document.querySelector(".active span")
     let quantity = document.getElementById("quantity");
-    activo.innerHTML = 'En el carrito: '+quantity.value+'';
+    if(quantity.value > 0){
+      let activo = document.querySelector(".active span");
+      activo.innerHTML = 'En el carrito: '+quantity.value+'';
 
-    if(!(currentProduct.product_id in cartProducts)){
-      currentProduct.quantity = quantity.value;
-      setCartProducts([...cartProducts, currentProduct]);
-    }else {
-      cartProducts[currentProduct.product_id].quantity = quantity.value;
+      if(!(currentProduct.product_id in cartProducts)){
+        currentProduct.quantity = quantity.value;
+        currentProduct.totalPrice = (quantity.value * currentProduct.unitPrice);
+        setCartProducts([...cartProducts, currentProduct]);
+      }else {
+        cartProducts[currentProduct.product_id].quantity = quantity.value;
+        cartProducts[currentProduct.product_id].quantity = (quantity.value * currentProduct.unitPrice);
+      }
     }
-
-    //codigo que se va a pasar al checkout
-    let unique = cartProducts.filter(onlyUnique);
   };
 
-  const onlyUnique = (value, index, self) => {
-    return self.indexOf(value) === index;
+  const maxLengthCheck = () => {
+    let quantity = document.getElementById('quantity');
+    if (quantity.value > currentProduct.stock) {
+     quantity.value = currentProduct.stock;
+    }
   };
 
   return (
@@ -131,19 +135,22 @@ const ProductsList = () => {
             </div>
             <div>
               <label>
-                <strong>Agregar al carrito:</strong>
+                <strong>Cantidad a agregar al carrito:</strong>
               </label>{" "}
               <input
                 type="number"
                 className="col-md-3"
+                onInput={maxLengthCheck}
                 id="quantity"
                 min="1"
                 max={currentProduct.stock}
                 name="quantity"
               />
-              <button className="btn btn-info" onClick={addCart}>
-                Agregar
-              </button>
+              <div>
+                <button className="btn btn-info" onClick={addCart}>
+                  Agregar al carrito
+                </button>
+              </div>
             </div>
 
 

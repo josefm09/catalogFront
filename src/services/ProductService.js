@@ -20,20 +20,10 @@ const remove = id => {
   return http.delete(`/product/${id}`);
 };
 
-const removeAll = () => {
-  return http.delete(`/product`);
-};
-
-const findByTitle = title => {
-  return http.get(`/product?name=${title}`);
-};
-
 export default {
   getAll,
   get,
   create,
   update,
-  remove,
-  removeAll,
-  findByTitle
+  remove
 };
