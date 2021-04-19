@@ -54,18 +54,19 @@ const AddProduct = props => {
 
   return (
     <div className="submit-form">
+      <button className="btn btn-info" onClick={backMenu}>
+        Volver a productos
+      </button>
       {submitted ? (
         <div>
           <h4>Producto agregado con exito!</h4>
           <button className="btn btn-success" onClick={newProduct}>
             Agregar otro
           </button>
-          <button className="btn btn-info" onClick={backMenu}>
-            Volver a productos
-          </button>
         </div>
       ) : (
-        <div>
+        <div>      
+          <h4>Agreagar producto</h4>
           <div className="form-group">
             <label htmlFor="name">Nombre del producto</label>
             <input

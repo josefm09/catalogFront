@@ -6,16 +6,10 @@ const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [searchTitle, setSearchTitle] = useState("");
 
   useEffect(() => {
     retrieveProducts();
   }, []);
-
-  const onChangeSearchTitle = e => {
-    const searchTitle = e.target.value;
-    setSearchTitle(searchTitle);
-  };
 
   const retrieveProducts = () => {
     ProductDataService.getAll()
@@ -38,37 +32,26 @@ const ProductsList = () => {
     setCurrentIndex(index);
   };
 
-  const findByTitle = () => {
-    ProductDataService.findByTitle(searchTitle)
-      .then(response => {
-        setProducts(response.data);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  const addCart = () => {
+    let activo = document.getElementsByClassName("active");
+    let quantity = document.getElementById("quantity");
+    var first = document.createElement("span");
+    var text = document.createTextNode("Carrito: "+quantity.value);
+    first.appendChild(text);
+    activo[0].appendChild(first);
   };
 
   return (
     <div className="list row">
       <div className="col-md-8">
         <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by title"
-            value={searchTitle}
-            onChange={onChangeSearchTitle}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByTitle}
-            >
-              Buscar
-            </button>
-          </div>
+          <button
+            className="btn btn-success"
+            type="button"
+            onClick={addCart}
+          >
+            Pagar articulos en carrito
+          </button>
         </div>
       </div>
       <div className="col-md-6">
@@ -84,7 +67,8 @@ const ProductsList = () => {
                 onClick={() => setActiveProduct(product, index)}
                 key={index}
               >
-                {product.name}
+                {product.name.substring(0,40)}
+
               </li>
             ))}
         </ul>
@@ -129,6 +113,21 @@ const ProductsList = () => {
               </label>{" "}
               {currentProduct.created}
             </div>
+            <div>
+              <label>
+                <strong>Agregar al carrito:</strong>
+              </label>{" "}
+              <input
+                type="number"
+                className="col-md-3"
+                id="quantity"
+                min="1"
+                max={currentProduct.stock}
+                onChange={addCart}
+                name="quantity"
+              />
+            </div>
+
 
             <Link
               to={"/products/" + currentProduct.product_id}
@@ -136,6 +135,7 @@ const ProductsList = () => {
             >
               Editar producto
             </Link>
+
           </div>
         ) : (
           <div>
