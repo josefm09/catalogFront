@@ -7,6 +7,8 @@ import AddProduct from "./components/AddProduct";
 import Product from "./components/Product";
 import ProductsList from "./components/ProductsList";
 import Checkout from "./components/Checkout";
+import SellList from "./components/SellList";
+import MostSell from "./components/MostSell";
 
 function App() {
   return (
@@ -26,6 +28,11 @@ function App() {
               Agregar un producto
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to={"/sells"} className="nav-link">
+              listado de ventas
+            </Link>
+          </li>
         </div>
       </nav>
 
@@ -35,6 +42,8 @@ function App() {
           <Route exact path="/add" component={AddProduct} />
           <Route path="/products/:id" component={Product} />
           <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/sells" component={SellList} />
+          <Route exact path="/mostSell" component={MostSell} />
         </Switch>
       </div>
     </div>

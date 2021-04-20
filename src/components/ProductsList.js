@@ -125,7 +125,11 @@ const ProductsList = () => {
               <label>
                 <strong>Existencia:</strong>
               </label>{" "}
-              {currentProduct.stock} Unidades
+              {currentProduct.stock > 0 ? (
+                currentProduct.stock + " Unidades"
+              ) : (
+                "Ya no hay en existencia"
+              )} 
             </div>
             <div>
               <label>

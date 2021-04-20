@@ -32,27 +32,32 @@ const Checkout = props => {
   };
 
   const saveCheckout = () => {
-    var data = {
-      idClient: checkout.idClient,
-      total: checkout.total,
-      payment: checkout.payment,
-      products: products
-    };
-
-    SellDataService.create(data)
-      .then(response => {
-        setCheckout({
-          idClient: response.data.idClient,
-          total: response.data.total,
-          payment: response.data.payment,
-          products: response.data.products
+    if(checkout.payment < checkout.total){
+        alert("Favor de cubrir el total a pagar");
+        return;
+    }else {
+        var data = {
+            idClient: checkout.idClient,
+            total: checkout.total,
+            payment: checkout.payment,
+            products: products
+        };
+    
+        SellDataService.create(data)
+        .then(response => {
+            setCheckout({
+            idClient: response.data.idClient,
+            total: response.data.total,
+            payment: response.data.payment,
+            products: response.data.products
+            });
+            setSubmitted(true);
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
         });
-        setSubmitted(true);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    }
   };
 
   const backMenu = () => {
@@ -106,7 +111,7 @@ const Checkout = props => {
           </table>
           <div className="row">
             <div className="form-group mx-auto">
-                <label htmlFor="idClient">Identificador del cliente</label>
+                <label className="required" htmlFor="idClient">Identificador del cliente</label>
                 <input
                 type="text"
                 className="form-control"
@@ -119,7 +124,7 @@ const Checkout = props => {
             </div>
 
             <div className="form-group mx-auto">
-                <label htmlFor="payment">Importe pagado (MXN)</label>
+                <label className="required" htmlFor="payment">Importe pagado (MXN)</label>
                 <input
                 type="number"
                 className="form-control"

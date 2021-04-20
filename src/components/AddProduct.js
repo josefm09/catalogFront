@@ -36,7 +36,6 @@ const AddProduct = props => {
           stock: response.data.stock
         });
         setSubmitted(true);
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -68,7 +67,7 @@ const AddProduct = props => {
         <div>      
           <h4>Agreagar producto</h4>
           <div className="form-group">
-            <label htmlFor="name">Nombre del producto</label>
+            <label className="required" htmlFor="name">Nombre del producto</label>
             <input
               type="text"
               className="form-control"
@@ -81,7 +80,7 @@ const AddProduct = props => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Descripción</label>
+            <label className="required" htmlFor="description">Descripción</label>
             <input
               type="text"
               className="form-control"
@@ -94,7 +93,7 @@ const AddProduct = props => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="unitPrice">Precio unitario (MXN)</label>
+            <label className="required" htmlFor="unitPrice">Precio unitario (MXN)</label>
             <input
               type="number"
               className="form-control"
@@ -109,7 +108,7 @@ const AddProduct = props => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="stock">Existencia</label>
+            <label className="required" htmlFor="stock">Existencia</label>
             <input
               type="number"
               className="form-control"

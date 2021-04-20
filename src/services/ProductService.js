@@ -20,10 +20,15 @@ const remove = id => {
   return http.delete(`/product/${id}`);
 };
 
+const getMostSelled = () => {
+  return http.get("/product/mostSelled");
+};
+
 export default {
   getAll,
   get,
   create,
   update,
-  remove
+  remove,
+  getMostSelled
 };
