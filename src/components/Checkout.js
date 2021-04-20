@@ -10,7 +10,7 @@ const Checkout = props => {
   };
   const [checkout, setCheckout] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     retrieveProducts();

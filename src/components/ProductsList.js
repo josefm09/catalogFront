@@ -48,7 +48,7 @@ const ProductsList = () => {
         setCartProducts([...cartProducts, currentProduct]);
       }else {
         cartProducts[currentProduct.product_id].quantity = quantity.value;
-        cartProducts[currentProduct.product_id].quantity = (quantity.value * currentProduct.unitPrice);
+        cartProducts[currentProduct.product_id].totalPrice = (quantity.value * currentProduct.unitPrice);
       }
     }
   };
